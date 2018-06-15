@@ -36,13 +36,8 @@ add_custom_command(
   COMMAND cp ${PROJECT_SOURCE_DIR}/GNUmakefile.in GNUmakefile.in
   COMMAND sh bootstrap.sh
   COMMAND ./configure
+  COMMAND cp config.h ${PROJECT_SOURCE_DIR}/config.h
 )
 
 add_library(masstree STATIC ${masstree_src})
-target_compile_options(masstree PUBLIC -include config.h)
-
-add_library(clp STATIC clp.c)
-
-add_executable(mttest mttest.cc config.h)
-target_link_libraries(mttest masstree clp)
-target_compile_options(mttest PUBLIC -include config.h)
+target_compile_options(masstree PUBLIC -include ${PROJECT_BINARY_DIR}/config.h)
